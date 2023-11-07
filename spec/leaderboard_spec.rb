@@ -44,5 +44,24 @@ RSpec.describe Leaderboard  do
       "Parent" => {:amount=>650.67, donors:2},
     })
   end
+
+  it "groups by online affiliation" do
+    leaderboard = Leaderboard.new(offline_csv_path: '../offline-donors.csv', online_csv_path: '../online-donors.csv')
+    expect(leaderboard.online_affiliations).to match({
+      "Alumni" => {:amount=>37500.0, donors:2},
+      "Parent" => {:amount=>37500.0, donors:2},
+    })
+  end
+
+  it "groups by affiliation" do
+    leaderboard = Leaderboard.new(offline_csv_path: '../offline-donors.csv', online_csv_path: '../online-donors.csv')
+    expect(leaderboard.by_affiliation).to match({
+      # some float precision math happening.
+      # mabye convert to amount_in_cents or something
+      "Alumni" => {:amount=>74519.26999999999, donors:5},
+      "Friend" => {:amount=>500.0, donors:1},
+      "Parent" => {:amount=>38150.67, donors:4},
+    })
+  end
 end
 

@@ -71,6 +71,28 @@ class Online
     end
     designations
   end
+
+  def by_affiliation
+    # NOTE: `donors` is more like `donations`. there will need to begin
+    # some de-duping if we want individual `donors`
+    affiliations = {}
+    @rows.each do |row|
+      amount = row['amount'].to_f
+      row_affiliations = JSON.parse(row['affiliation'])
+      row_affiliations.keys.each do |affiliation|
+        if affiliations[affiliation]
+          affiliations[affiliation][:amount] += amount
+          affiliations[affiliation][:donors] += 1
+        else
+          affiliations[affiliation] = {
+            amount: amount,
+            donors: 1
+          }
+        end
+      end
+    end
+    affiliations
+  end
 end
 
 class Leaderboard
@@ -91,8 +113,21 @@ class Leaderboard
     end
   end
 
+  def by_affiliation
+    offline_affiliations.merge(online_affiliations) do |key, old, new|
+      {
+        amount: old[:amount] + new[:amount],
+        donors: old[:donors] + new[:donors]
+      }
+    end
+  end
+
   def offline_affiliations
     @offline.by_affiliation
+  end
+
+  def online_affiliations
+    @online.by_affiliation
   end
 
   def offline_designations
