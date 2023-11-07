@@ -10,14 +10,14 @@ class Offline
     affiliations = {}
     @rows.each do |row|
       affiliation = row['affiliation']
-      amount = row['designated_amount'].to_f
-      next if affiliation.nil? || affiliation.size == 0
+      amount = row['amount'].to_f
+      next if affiliation.nil? || affiliation.size == 0 ||
 
-      if affiliation[affiliation]
-        affiliation[affiliation][:amount] += amount
-        affiliation[affiliation][:donors] += 1
+      if affiliations[affiliation]
+        affiliations[affiliation][:amount] += amount
+        affiliations[affiliation][:donors] += 1
       else
-        affiliation[affiliation] = {
+        affiliations[affiliation] = {
           amount: amount,
           donors: 1
         }
