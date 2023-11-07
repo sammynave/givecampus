@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Online
   def initialize(rows:)
     @rows = rows

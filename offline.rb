@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Offline
   def initialize(rows:)
     @rows = rows
