@@ -15,11 +15,11 @@ class Offline
 
       if affiliations[affiliation]
         affiliations[affiliation][:amount] += amount
-        affiliations[affiliation][:donors] += 1
+        affiliations[affiliation][:donations] += 1
       else
         affiliations[affiliation] = {
           amount: amount,
-          donors: 1
+          donations: 1
         }
       end
 
@@ -36,11 +36,11 @@ class Offline
 
       if designations[designation_name]
         designations[designation_name][:amount] += amount
-        designations[designation_name][:donors] += 1
+        designations[designation_name][:donations] += 1
       else
         designations[designation_name] = {
           amount: amount,
-          donors: 1
+          donations: 1
         }
       end
     end
@@ -60,11 +60,11 @@ class Online
       row_designations.each do |(designation_name, amount)|
         if designations[designation_name]
           designations[designation_name][:amount] += amount.to_f
-          designations[designation_name][:donors] += 1
+          designations[designation_name][:donations] += 1
         else
           designations[designation_name] = {
             amount: amount.to_f,
-            donors: 1
+            donations: 1
           }
         end
       end
@@ -73,8 +73,6 @@ class Online
   end
 
   def by_affiliation
-    # NOTE: `donors` is more like `donations`. there will need to begin
-    # some de-duping if we want individual `donors`
     affiliations = {}
     @rows.each do |row|
       amount = row['amount'].to_f
@@ -82,11 +80,11 @@ class Online
       row_affiliations.keys.each do |affiliation|
         if affiliations[affiliation]
           affiliations[affiliation][:amount] += amount
-          affiliations[affiliation][:donors] += 1
+          affiliations[affiliation][:donations] += 1
         else
           affiliations[affiliation] = {
             amount: amount,
-            donors: 1
+            donations: 1
           }
         end
       end
@@ -108,7 +106,9 @@ class Leaderboard
     offline_designations.merge(online_designations) do |key, old, new|
       {
         amount: old[:amount] + new[:amount],
-        donors: old[:donors] + new[:donors]
+        donations: old[:donations] + new[:donations],
+        # TODO: add `donors` count here. we'll need to do some de-duping
+        # within each CSV and across both
       }
     end
   end
@@ -117,7 +117,9 @@ class Leaderboard
     offline_affiliations.merge(online_affiliations) do |key, old, new|
       {
         amount: old[:amount] + new[:amount],
-        donors: old[:donors] + new[:donors]
+        donations: old[:donations] + new[:donations]
+        # TODO: add `donors` count here. we'll need to do some de-duping
+        # within each CSV and across both
       }
     end
   end

@@ -6,50 +6,50 @@ RSpec.describe Leaderboard  do
   it "groups by offline designations" do
     leaderboard = Leaderboard.new(offline_csv_path: '../offline-donors.csv', online_csv_path: '../online-donors.csv')
     expect(leaderboard.offline_designations).to match({
-       "Area of Greatest Need" => {:amount=>37000.0, :donors=>2},
-       "Athletics" => {:amount=>150.67, :donors=>1},
-       "College of Education" => {:amount=>2000.0, :donors=>1},
-       "College of Veterinary Medicine" => {:amount=>19.27, :donors=>1},
-       "Mission and Ministry" => {:amount=>2000.0, :donors=>1},
-       "Student Financial Aid" => {:amount=>500.0, :donors=>1}
+       "Area of Greatest Need" => {:amount=>37000.0, :donations=>2},
+       "Athletics" => {:amount=>150.67, :donations=>1},
+       "College of Education" => {:amount=>2000.0, :donations=>1},
+       "College of Veterinary Medicine" => {:amount=>19.27, :donations=>1},
+       "Mission and Ministry" => {:amount=>2000.0, :donations=>1},
+       "Student Financial Aid" => {:amount=>500.0, :donations=>1}
     })
   end
 
   it "groups by online designations" do
     leaderboard = Leaderboard.new(offline_csv_path: '../offline-donors.csv', online_csv_path: '../online-donors.csv')
     expect(leaderboard.online_designations).to match({
-       "Area of Greatest Need" => {:amount=>35000.0, :donors=>1},
-       "College of Veterinary Medicine" => {:amount=>1250.0, :donors=>1},
-       "Student Financial Aid" => {:amount=>1250.0, :donors=>1}
+       "Area of Greatest Need" => {:amount=>35000.0, :donations=>1},
+       "College of Veterinary Medicine" => {:amount=>1250.0, :donations=>1},
+       "Student Financial Aid" => {:amount=>1250.0, :donations=>1}
     })
   end
 
   it "groups by designations" do
     leaderboard = Leaderboard.new(offline_csv_path: '../offline-donors.csv', online_csv_path: '../online-donors.csv')
     expect(leaderboard.by_designation).to match({
-       "Area of Greatest Need" => {:amount=>72000.0, :donors=>3},
-       "Athletics" => {:amount=>150.67, :donors=>1},
-       "College of Education" => {:amount=>2000.0, :donors=>1},
-       "College of Veterinary Medicine" => {:amount=>1269.27, :donors=>2},
-       "Mission and Ministry" => {:amount=>2000.0, :donors=>1},
-       "Student Financial Aid" => {:amount=>1750.0, :donors=>2}
+       "Area of Greatest Need" => {:amount=>72000.0, :donations=>3},
+       "Athletics" => {:amount=>150.67, :donations=>1},
+       "College of Education" => {:amount=>2000.0, :donations=>1},
+       "College of Veterinary Medicine" => {:amount=>1269.27, :donations=>2},
+       "Mission and Ministry" => {:amount=>2000.0, :donations=>1},
+       "Student Financial Aid" => {:amount=>1750.0, :donations=>2}
     })
   end
 
   it "groups by offline affiliation" do
     leaderboard = Leaderboard.new(offline_csv_path: '../offline-donors.csv', online_csv_path: '../online-donors.csv')
     expect(leaderboard.offline_affiliations).to match({
-      "Alumni" => {:amount=>37019.27, donors:3},
-      "Friend" => {:amount=>500.0, donors:1},
-      "Parent" => {:amount=>650.67, donors:2},
+      "Alumni" => {:amount=>37019.27, donations:3},
+      "Friend" => {:amount=>500.0, donations:1},
+      "Parent" => {:amount=>650.67, donations:2},
     })
   end
 
   it "groups by online affiliation" do
     leaderboard = Leaderboard.new(offline_csv_path: '../offline-donors.csv', online_csv_path: '../online-donors.csv')
     expect(leaderboard.online_affiliations).to match({
-      "Alumni" => {:amount=>37500.0, donors:2},
-      "Parent" => {:amount=>37500.0, donors:2},
+      "Alumni" => {:amount=>37500.0, donations:2},
+      "Parent" => {:amount=>37500.0, donations:2},
     })
   end
 
@@ -58,9 +58,9 @@ RSpec.describe Leaderboard  do
     expect(leaderboard.by_affiliation).to match({
       # some float precision math happening.
       # mabye convert to amount_in_cents or something
-      "Alumni" => {:amount=>74519.26999999999, donors:5},
-      "Friend" => {:amount=>500.0, donors:1},
-      "Parent" => {:amount=>38150.67, donors:4},
+      "Alumni" => {:amount=>74519.26999999999, donations:5},
+      "Friend" => {:amount=>500.0, donations:1},
+      "Parent" => {:amount=>38150.67, donations:4},
     })
   end
 end
