@@ -35,5 +35,13 @@ RSpec.describe Leaderboard  do
        "Student Financial Aid" => {:amount=>1750.0, :donors=>2}
     })
   end
+
+  # it "groups by offline affiliation" do
+  #   leaderboard = Leaderboard.new(offline_csv_path: '../offline-donors.csv', online_csv_path: '../online-donors.csv')
+  #   expect(leaderboard.offline_affiliations).to match({
+  #     "Parent" => {:amount=>37500.0, donors: 2},
+  #     "Alumni" => {:amount=>37500.0, donors: 2}
+  #   })
+  # end
 end
 
